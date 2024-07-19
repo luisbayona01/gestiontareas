@@ -17,8 +17,9 @@ class TaskController extends Controller
      * Display a listing of the resource.
      */
     public function index(): View
-    {
+    {   $userId = Auth::user()->id; 
         $tasks = DB::table('tasks')
+             ->where('user_id', $userId)
             ->join('users', 'tasks.user_id', '=', 'users.id')
             ->select('tasks.*', 'users.name as user_name')
             ->get();
