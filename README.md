@@ -1,1 +1,2 @@
-# gestiontareas
+# clonar el repositorio   despues  ingresar al proyecto clonado   
+# tener php v 8.2   y  ejecutar el comando composer  install despues  copoar el archivo env.example y renombrarlo como .env  y ejecutar php artisan 
