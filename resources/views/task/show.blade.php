@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $task->title ?? __('Show') . " " . __('Task') }}
+    {{ __('Show') . " " . __('Task') }}
 @endsection
 
 @section('content')
@@ -21,7 +21,7 @@
                     <div class="card-body bg-white">
                         
                                 <div class="form-group mb-2 mb20">
-                                    <strong>Usuaraio:</strong>
+                                    <strong>Usuario:</strong>
                                     {{ $task->user_name }}
                                 </div>
                                 <div class="form-group mb-2 mb20">

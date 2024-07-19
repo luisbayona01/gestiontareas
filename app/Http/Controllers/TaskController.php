@@ -70,11 +70,12 @@ class TaskController extends Controller
     public function show($id): View
     {
       
-        $task = DB::table('tasks')
+        $tasks= DB::table('tasks')
         ->join('users', 'tasks.user_id', '=', 'users.id')
         ->select('tasks.*', 'users.name as user_name', 'users.email as user_email')
         ->where('tasks.id', $id)
         ->get();
+       $task=$tasks[0];
         return view('task.show', compact('task'));
     }
 
