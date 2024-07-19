@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $task->name ?? __('Show') . " " . __('Task') }}
+    {{ $task->title ?? __('Show') . " " . __('Task') }}
 @endsection
 
 @section('content')
