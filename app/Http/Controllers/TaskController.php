@@ -123,4 +123,21 @@ class TaskController extends Controller
         return Redirect::route('tasks.index')
             ->with('success', 'Task deleted successfully');
     }
+
+    public function taskStatusCounts()
+    {
+        $counts = DB::table('tasks')
+            ->select('status', DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->pluck('count', 'status');
+
+        // Asumiendo que los posibles estados son: pendiente, en progreso, completada
+        $data = [
+            'pendiente' => $counts->get('pendiente', 0),
+            'en progreso' => $counts->get('en progreso', 0),
+            'completada' => $counts->get('completada', 0),
+        ];
+
+        return response()->json($data);
+    }
 }
