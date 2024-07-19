@@ -9,6 +9,8 @@ use App\Http\Requests\TaskRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use  DB;
+use Illuminate\Support\Facades\Auth;
+
 class TaskController extends Controller
 {
     /**
@@ -125,13 +127,16 @@ class TaskController extends Controller
     }
 
     public function taskStatusCounts()
-    {
+    { 
+        $userId = Auth::user()->id; 
+        //dd($userId);
         $counts = DB::table('tasks')
+            ->where('user_id', $userId) 
             ->select('status', DB::raw('count(*) as count'))
             ->groupBy('status')
             ->pluck('count', 'status');
 
-        // Asumiendo que los posibles estados son: pendiente, en progreso, completada
+        
         $data = [
             'pendiente' => $counts->get('pendiente', 0),
             'en progreso' => $counts->get('en progreso', 0),
@@ -139,5 +144,6 @@ class TaskController extends Controller
         ];
 
         return response()->json($data);
+       
     }
 }

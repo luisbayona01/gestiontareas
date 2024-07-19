@@ -21,4 +21,4 @@ Route::resource('tasks',  App\Http\Controllers\TaskController::class)->middlewar
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/task-status-counts', [App\Http\Controllers\TaskController::class, 'taskStatusCounts']);
+Route::get('/task-status-counts', [App\Http\Controllers\TaskController::class, 'taskStatusCounts'])->middleware('auth');
