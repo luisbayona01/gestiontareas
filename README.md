@@ -5,3 +5,5 @@
 # correr las  migraciones  con el comando php artisan migrate 
 # ejecutar el comnado php artisan serve  para ejecutar el proyecto sobre  el servidor de laravel o  crear  un virtual host 
 # una  vez  echo lo anterior  solo es  registrarse y logearse  y dirgirse ala opcion que dice taks en el  menu para  relaizar la gestion de tareas
+adjunto un  link para ver el funcionamineto de la pagina 
+https://resolved-termite-mentally.ngrok-free.app/login
