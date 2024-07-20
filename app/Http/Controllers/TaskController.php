@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use  DB;
 use Illuminate\Support\Facades\Auth;
-
+use App\Notifications\TaskAction;
 class TaskController extends Controller
 {
     /**
@@ -57,7 +57,12 @@ class TaskController extends Controller
            
             $task = Task::create($request->all());
 
-        
+            $message = "La tarea '{$task->name}' ha sido  creada.";
+            $url = url('/tasks/' . $task->id);
+
+            // Obtener el usuario autenticado y enviar la notificación
+            $user = Auth::user();
+            $user->notify(new TaskAction($message, $url));
             return response()->json(['ok' => true, 'message' => 'tarea creada exitosa mente'], 201);
         } catch (\Exception $e) {
           
@@ -110,7 +115,12 @@ class TaskController extends Controller
            
             $task->update($request->all());
 
-        
+            $message = "La tarea '{$task->title}' ha sido actualizada.";
+            $url = url('/tasks/' . $task->id);
+
+            // Obtener el usuario autenticado y enviar la notificación
+            $user = Auth::user();
+            $user->notify(new TaskAction($message, $url));
             return response()->json(['ok' => true, 'message' => 'tarea modificada exitosa mente'], 201);
         } catch (\Exception $e) {
           
@@ -122,11 +132,26 @@ class TaskController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        Task::find($id)->delete();
+        $task = Task::find($id);
+        
+        if ($task) {
+            $task->delete();
 
-        return Redirect::route('tasks.index')
-            ->with('success', 'Task deleted successfully');
+            $message = "La tarea '{$task->title}' ha sido eliminada.";
+            $url = url('/tasks');
+
+            // Obtener el usuario autenticado y enviar la notificación
+            $user = Auth::user();
+            $user->notify(new TaskAction($message, $url));
+
+            return Redirect::route('tasks.index')
+                ->with('success', 'Tarea eliminada exitosamente');
+        } else {
+            return Redirect::route('tasks.index')
+                ->with('error', 'Tarea no encontrada');
+        }
     }
+    
 
     public function taskStatusCounts()
     { 
